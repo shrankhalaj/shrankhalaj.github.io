@@ -1,0 +1,51 @@
+---
+title: "Assignment 2 DSA6100"
+author: "Shrankhala Jain"
+date: "1/22/2018"
+output: html_document
+---
+Applying PCA on the Iris flower dataset for analyzing and visualization. The data contain four continuous variables which corresponds to physical measures of flowers and a categorical variable describing the flowers’ species. Used prcomp package and ggbiplot for the visualization.
+
+```{r setup, include=FALSE}
+ setwd ('/Users/ankurjain/Desktop/Assignment')
+Flowers = read.csv(file = 'Iris.csv', header=T, sep= ',')
+summary (Flowers)
+head(Flowers)
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+log.ir<- log(iris[, 1:4])
+ir.species <- iris[, 5]
+ir.pca <- prcomp(log.ir,
+                 center = TRUE,
+                 scale. = TRUE) 
+print(ir.pca)
+```
+
+## Including Plots
+
+
+
+```{r pressure, echo=FALSE}
+library(devtools)
+install_github("ggbiplot", "vqv")
+ 
+library(ggbiplot)
+g <- ggbiplot(ir.pca, obs.scale = 1, var.scale = 1, 
+              groups = ir.species, ellipse = TRUE, 
+              circle = TRUE)
+g <- g + scale_color_discrete(name = '')
+g <- g + theme(legend.direction = 'horizontal', 
+               legend.position = 'top')
+print(g)
+```
+The plot clearly indicates that one class can be separated from the other two those are merging together. 
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
